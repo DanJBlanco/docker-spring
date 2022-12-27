@@ -23,6 +23,7 @@
 
     <modules>
         <module>msvc-users</module>
+        <module>msvc-courses</module>
     </modules>
 
 </project>
