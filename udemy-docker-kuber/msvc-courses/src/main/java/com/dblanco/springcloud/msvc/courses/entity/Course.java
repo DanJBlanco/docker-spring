@@ -1,6 +1,7 @@
 package com.dblanco.springcloud.msvc.courses.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 
 @Entity
@@ -12,9 +13,7 @@ public class Course {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @NotEmpty
     private String name;
-
-
-
 
 }

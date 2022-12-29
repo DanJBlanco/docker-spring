@@ -2,14 +2,18 @@ package com.dblanco.springcloud.msvc.courses.controller;
 
 import com.dblanco.springcloud.msvc.courses.entity.Course;
 import com.dblanco.springcloud.msvc.courses.services.CourseService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -36,12 +40,21 @@ public class CourseController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<?> save(@RequestBody Course course){
+    public ResponseEntity<?> save(@Valid @RequestBody Course course, BindingResult result){
+
+        if(result.hasErrors()){
+            return validRequestBody(result);
+        }
+
         return ResponseEntity.status(HttpStatus.CREATED).body(courseService.save(course));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody Course courseReq){
+    public ResponseEntity<?> update(@PathVariable Long id,@Valid @RequestBody Course courseReq, BindingResult result){
+
+        if(result.hasErrors()){
+            return validRequestBody(result);
+        }
 
         Optional<Course> oCourse = courseService.getById(id);
 
@@ -67,5 +80,13 @@ public class CourseController {
         return ResponseEntity.notFound().build();
     }
 
+
+    private static ResponseEntity<Map<String, String>> validRequestBody(BindingResult result) {
+        Map<String, String> errors = new HashMap<>();
+        result.getFieldErrors().forEach(err -> {
+            errors.put(err.getField(), err.getDefaultMessage());
+        });
+        return ResponseEntity.badRequest().body(errors);
+    }
 
 }

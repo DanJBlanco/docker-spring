@@ -1,10 +1,12 @@
 package org.dblanco.springcloud.msvc.users.controllers;
 
+import jakarta.validation.Valid;
 import org.dblanco.springcloud.msvc.users.models.entity.User;
 import org.dblanco.springcloud.msvc.users.services.UserService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,7 +15,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -46,12 +50,21 @@ public class UserController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<?> save(@RequestBody User user){
+    public ResponseEntity<?> save(@Valid  @RequestBody User user, BindingResult result){
+
+        if(result.hasErrors()){
+            return validRequestBody(result);
+        }
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(user));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> edit(@RequestBody User user, @PathVariable Long id){
+    public ResponseEntity<?> edit(@Valid @RequestBody User user, BindingResult result, @PathVariable Long id){
+
+        if(result.hasErrors()){
+            return validRequestBody(result);
+        }
+
         Optional<User> oUser = userService.detailById(id);
 
         if( oUser.isPresent()){
@@ -65,6 +78,15 @@ public class UserController {
 
         return ResponseEntity.notFound().build();
     }
+
+    private static ResponseEntity<Map<String, String>> validRequestBody(BindingResult result) {
+        Map<String, String> errors = new HashMap<>();
+        result.getFieldErrors().forEach(err -> {
+            errors.put(err.getField(), err.getDefaultMessage());
+        });
+        return ResponseEntity.badRequest().body(errors);
+    }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id){
