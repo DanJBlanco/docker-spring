@@ -1,8 +1,7 @@
 package com.dblanco.springcloud.msvc.courses.services;
 
-import com.dblanco.springcloud.msvc.courses.entity.Course;
+import com.dblanco.springcloud.msvc.courses.models.entity.Course;
 import com.dblanco.springcloud.msvc.courses.repositories.CourseRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

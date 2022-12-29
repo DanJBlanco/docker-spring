@@ -1,13 +1,11 @@
 package com.dblanco.springcloud.msvc.courses.controller;
 
-import com.dblanco.springcloud.msvc.courses.entity.Course;
+import com.dblanco.springcloud.msvc.courses.models.entity.Course;
 import com.dblanco.springcloud.msvc.courses.services.CourseService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
