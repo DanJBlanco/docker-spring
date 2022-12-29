@@ -1,5 +1,6 @@
 package com.dblanco.springcloud.msvc.courses.services;
 
+import com.dblanco.springcloud.msvc.courses.models.User;
 import com.dblanco.springcloud.msvc.courses.models.entity.Course;
 
 import java.util.List;
@@ -11,5 +12,14 @@ public interface CourseService {
     Optional<Course> getById(Long id);
     Course save(Course course);
     void delete(Long id);
+
+
+
+    Optional<User> assignUser(User user, Long courseId);
+
+    Optional<User> createUser(User user, Long courseId);
+    Optional<User> unAssignUser(User user, Long courseId);
+
+
 
 }
