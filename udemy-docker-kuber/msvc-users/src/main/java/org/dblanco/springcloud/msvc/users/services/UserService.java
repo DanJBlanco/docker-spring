@@ -16,4 +16,11 @@ public interface UserService {
 
     boolean existsByEmail(String email);
 
+    Optional<User> assignUser(User user, Long courseId);
+
+    Optional<User> createUser(User user, Long courseId);
+    Optional<User> unAssignUser(User user, Long courseId);
+
+
+
 }

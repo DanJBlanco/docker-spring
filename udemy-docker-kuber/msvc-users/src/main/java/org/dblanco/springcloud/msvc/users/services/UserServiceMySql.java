@@ -51,4 +51,19 @@ public class UserServiceMySql implements UserService {
     public boolean existsByEmail(String email) {
         return userRepository.existsByEmail(email);
     }
+
+    @Override
+    public Optional<User> assignUser(User user, Long courseId) {
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<User> createUser(User user, Long courseId) {
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<User> unAssignUser(User user, Long courseId) {
+        return Optional.empty();
+    }
 }
