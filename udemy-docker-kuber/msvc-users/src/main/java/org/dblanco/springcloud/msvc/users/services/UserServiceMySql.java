@@ -46,4 +46,9 @@ public class UserServiceMySql implements UserService {
     public Optional<User> getByEmail(String email) {
         return userRepository.findEmail(email);
     }
+
+    @Override
+    public boolean existsByEmail(String email) {
+        return userRepository.existsByEmail(email);
+    }
 }

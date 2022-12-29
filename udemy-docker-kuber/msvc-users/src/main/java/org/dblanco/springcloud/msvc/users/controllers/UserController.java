@@ -49,15 +49,15 @@ public class UserController {
     @PostMapping("/")
     public ResponseEntity<?> save(@Valid  @RequestBody User user, BindingResult result){
 
-        if (!user.getEmail().isEmpty() && userService.getByEmail(user.getEmail()).isPresent()){
+        if(result.hasErrors()){
+            return validRequestBody(result);
+        }
+
+        if (userService.existsByEmail(user.getEmail())){
             return ResponseEntity.badRequest()
                     .body(Collections
                             .singletonMap("message", "Email already exist")
                     );
-        }
-
-        if(result.hasErrors()){
-            return validRequestBody(result);
         }
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(user));
     }
