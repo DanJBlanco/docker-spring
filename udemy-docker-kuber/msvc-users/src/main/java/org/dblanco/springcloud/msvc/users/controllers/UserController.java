@@ -15,10 +15,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 public class UserController {
@@ -52,6 +49,13 @@ public class UserController {
     @PostMapping("/")
     public ResponseEntity<?> save(@Valid  @RequestBody User user, BindingResult result){
 
+        if (!user.getEmail().isEmpty() && userService.getByEmail(user.getEmail()).isPresent()){
+            return ResponseEntity.badRequest()
+                    .body(Collections
+                            .singletonMap("message", "Email already exist")
+                    );
+        }
+
         if(result.hasErrors()){
             return validRequestBody(result);
         }
@@ -61,6 +65,7 @@ public class UserController {
     @PutMapping("/{id}")
     public ResponseEntity<?> edit(@Valid @RequestBody User user, BindingResult result, @PathVariable Long id){
 
+
         if(result.hasErrors()){
             return validRequestBody(result);
         }
@@ -69,6 +74,17 @@ public class UserController {
 
         if( oUser.isPresent()){
             User userDb = oUser.get();
+
+
+            if ( !user.getEmail().isEmpty()
+                    && !user.getEmail().equalsIgnoreCase(userDb.getEmail())
+                    && userService.getByEmail(user.getEmail()).isPresent()) {
+                return ResponseEntity.badRequest()
+                        .body(Collections
+                                .singletonMap("message", "Email already exist")
+                        );
+            }
+
             userDb.setName(user.getName());
             userDb.setEmail(user.getEmail());
             userDb.setPassword(user.getPassword());

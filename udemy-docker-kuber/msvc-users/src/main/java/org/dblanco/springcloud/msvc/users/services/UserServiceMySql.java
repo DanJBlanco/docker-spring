@@ -40,4 +40,10 @@ public class UserServiceMySql implements UserService {
     public void delete(Long id) {
         userRepository.deleteById(id);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<User> getByEmail(String email) {
+        return userRepository.findEmail(email);
+    }
 }
