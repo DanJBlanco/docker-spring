@@ -1,7 +1,9 @@
 package com.dblanco.springcloud.msvc.courses.controller;
 
+import com.dblanco.springcloud.msvc.courses.models.User;
 import com.dblanco.springcloud.msvc.courses.models.entity.Course;
 import com.dblanco.springcloud.msvc.courses.services.CourseService;
+import feign.FeignException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -9,10 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 public class CourseController {
@@ -78,6 +77,57 @@ public class CourseController {
         return ResponseEntity.notFound().build();
     }
 
+    @PutMapping("/assign-user/{courseId}")
+    public ResponseEntity<?> assignUser(@RequestBody User user, @PathVariable Long courseId){
+
+        Optional<User> o;
+        try{
+           o = courseService.assignUser(user, courseId);
+        }catch (FeignException e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Collections.singletonMap("message","Id User no exists, or Communication Error: " + e.getMessage()));
+        }
+
+        if(o.isPresent()){
+            return ResponseEntity.status(HttpStatus.CREATED).body(o.get());
+        }
+
+        return ResponseEntity.notFound().build();
+    }
+    @PostMapping("/create-user/{courseId}")
+    public ResponseEntity<?> createUser(@RequestBody User user, @PathVariable Long courseId){
+
+        Optional<User> o;
+        try{
+           o = courseService.createUser(user, courseId);
+        }catch (FeignException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(Collections.singletonMap("message","Could not create user or Communication Error: " + e.getMessage()));
+        }
+
+        if(o.isPresent()){
+            return ResponseEntity.status(HttpStatus.CREATED).body(o.get());
+        }
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Collections.singletonMap("Error:","User cant create"));
+    }
+    @DeleteMapping("/delete-user/{courseId}")
+    public ResponseEntity<?> deleteUser(@RequestBody User user, @PathVariable Long courseId){
+
+        Optional<User> o;
+        try{
+           o = courseService.unAssignUser(user, courseId);
+        }catch (FeignException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(Collections.singletonMap("message","Could not create user or Communication Error: " + e.getMessage()));
+        }
+
+        if(o.isPresent()){
+            return ResponseEntity.status(HttpStatus.OK).body(o.get());
+        }
+
+        return ResponseEntity.notFound().build();
+    }
 
     private static ResponseEntity<Map<String, String>> validRequestBody(BindingResult result) {
         Map<String, String> errors = new HashMap<>();
