@@ -31,7 +31,7 @@ public class CourseController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Course> getById(@PathVariable Long id){
-        Optional<Course> oCourse = courseService.getById(id);
+        Optional<Course> oCourse = courseService.getByIdWithUsers(id); //courseService.getById(id);
 
         return oCourse.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }

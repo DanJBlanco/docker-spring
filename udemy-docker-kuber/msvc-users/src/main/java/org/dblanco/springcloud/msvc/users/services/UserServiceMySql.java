@@ -52,4 +52,8 @@ public class UserServiceMySql implements UserService {
         return userRepository.existsByEmail(email);
     }
 
+    @Override
+    public List<User> findAllById(Iterable<Long> ids) {
+        return (List<User>) userRepository.findAllById(ids);
+    }
 }

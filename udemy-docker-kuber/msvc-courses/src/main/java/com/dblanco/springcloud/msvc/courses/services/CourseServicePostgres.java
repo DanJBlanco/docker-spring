@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service("CourseServicePostgres")
 public class CourseServicePostgres implements CourseService {
@@ -110,5 +111,25 @@ public class CourseServicePostgres implements CourseService {
 
         }
         return Optional.empty();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<Course> getByIdWithUsers(Long id) {
+
+        Optional<Course> o = courseRepository.findById(id);
+        if (o.isPresent()){
+            Course course = o.get();
+            if(!course.getCourseUsers().isEmpty()){
+                List<Long> ids = course.getCourseUsers().stream().map(CourseUser::getUserId).toList();
+                List<User> usersByCourses = clientRest.getUsersByCourses(ids);
+                course.setUsers(usersByCourses);
+            }
+            return Optional.of(course);
+        }
+
+        return Optional.empty();
+
+
     }
 }
