@@ -21,8 +21,8 @@ public class UserController {
     }
 
     @GetMapping("/")
-    public List<User> list(){
-        return userService.list();
+    public Map<String, List<User>> list(){
+        return Collections.singletonMap("user docker:", userService.list());
     }
 
     @GetMapping("/{id}")
@@ -50,7 +50,7 @@ public class UserController {
         if (userService.existsByEmail(user.getEmail())){
             return ResponseEntity.badRequest()
                     .body(Collections
-                            .singletonMap("message", "Email already exist")
+                            .singletonMap("message", "Email already exist!!!")
                     );
         }
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(user));
