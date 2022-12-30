@@ -1,5 +1,6 @@
 package org.dblanco.springcloud.msvc.users.services;
 
+import org.dblanco.springcloud.msvc.users.client.CourseClientRest;
 import org.dblanco.springcloud.msvc.users.models.entity.User;
 import org.dblanco.springcloud.msvc.users.repositories.UserRepository;
 import org.springframework.stereotype.Service;
@@ -13,8 +14,11 @@ public class UserServiceMySql implements UserService {
 
     private final UserRepository userRepository;
 
-    public UserServiceMySql(UserRepository userRepository) {
+    private final CourseClientRest clientRest;
+
+    public UserServiceMySql(UserRepository userRepository, CourseClientRest clientRest) {
         this.userRepository = userRepository;
+        this.clientRest = clientRest;
     }
 
     @Override
@@ -38,7 +42,9 @@ public class UserServiceMySql implements UserService {
     @Override
     @Transactional
     public void delete(Long id) {
+
         userRepository.deleteById(id);
+        clientRest.deleteCourseUser(id);
     }
 
     @Override

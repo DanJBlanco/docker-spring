@@ -3,7 +3,7 @@ package org.dblanco.springcloud.msvc.users.models.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
-import lombok.*;
+import lombok.Data;
 
 @Data
 @Entity
