@@ -22,7 +22,7 @@ public class UserController {
 
     @GetMapping("/")
     public Map<String, List<User>> list(){
-        return Collections.singletonMap("user docker:", userService.list());
+        return Collections.singletonMap("user docker stages:", userService.list());
     }
 
     @GetMapping("/{id}")

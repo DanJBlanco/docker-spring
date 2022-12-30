@@ -1,4 +1,4 @@
-FROM --platform=linux/x86_64 openjdk:17-jdk-alpine3.14 as builder
+FROM openjdk:17.0.2-slim as builder
 
 WORKDIR /app/msvc-users
 
@@ -17,11 +17,11 @@ RUN ./mvnw clean package -DskipTests
 
 #============#
 
-FROM --platform=linux/x86_64 openjdk:17-jdk-alpine3.14
+FROM openjdk:17.0.2-slim
 
 WORKDIR /app
 
-COPY --from=builder/ /app/msvc-users/target/msvc-users-0.0.1-SNAPSHOT.jar .
+COPY --from=builder /app/msvc-users/target/msvc-users-0.0.1-SNAPSHOT.jar .
 
 EXPOSE 8001
 
