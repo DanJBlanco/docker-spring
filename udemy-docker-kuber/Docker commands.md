@@ -1,26 +1,84 @@
-Create image and build project ( -t assign a name or tag to image  -f folder where docker files location)
-docker build -t NAME_IMAGE . -f ./DIRECTORY_DOCKERFILE/Dockerfile 
+---
 
-DEBUG Create image and build project ( -t assign a name or tag to image  -f folder where docker files location)
-DOCKER_BUILDKIT=0  docker build -t NAME_IMAGE . -f ./DIRECTORY_DOCKERFILE/Dockerfile 
+## **Images**
 
-list images
-docker images
+#### Tag
 
-delete or remove image ( -f force remove )
-docker rmi -f NAME_OR_ID_IMAGE
+> docker tag, docker build *-t* NAME_IMAGE *.* *-f* ./DIRECTORY_DOCKERFILE/Dockerfile
+>
+> `-t tag: assign name`
+>
+> `-f file: directory where is Dockerfile`
+>
+> `. directory where image will be create`
 
-list container ( running )
-docker ps
+#### List
 
-Run images (-p custom post numbers)
-docker run -p EXTERNAL_PORT:INTERNAL_PORT_NUMBER NAME_OR_ID_IMAGE
+> docker images
 
-Stop container
-docker stop NAME_OR_ID_container
+#### Delete
 
-TIPS ARM62 M1 Apple
-ADD: --platform=linux/x86_64 to FROM, to indicate SO 
-    e.g: FROM --platform=linux/x86_64 openjdk:17-jdk-alpine3.14 as builder
+> docker rmi *-f*, docker image prune
+>
+> `-f force`
+
+#### Analyze
+
+> docker image inspect
 
 
+## **Component**
+
+#### Name
+
+> docker -run --name
+
+#### List
+
+> docker ps
+
+#### Delete
+
+> docker rm, container prune
+
+#### Analyze
+
+> docker container inspect
+
+#### Run, stop, restart
+
+> docker run / stop / start, docker run *-p* EXTERNAL_PORT:INTERNAL_PORT_NUMBER NAME_OR_ID_IMAGE
+>
+> `-p port: assign ports`
+
+---
+
+
+
+## **TIPS**
+
+> DOCKER_BUILDKIT=0 : print log to view errors
+>
+> `DOCKER_BUILDKIT=0  docker build -t NAME_IMAGE . -f ./DIRECTORY_DOCKERFILE/Dockerfile`
+
+> docker run *-d* *-p* 8001:8001 NAME_OR_ID_IMAGE
+>
+> `-d ditach: run docker on background`
+
+> docker *attach* *-f* NAME_OR_ID_IMAGE
+>
+> `attach: run docker on primary panel`
+>
+> `-f : view logs`
+
+> docker logs NAME_OR_ID_IMAGE
+>
+> `logs : view logs`
+
+> docker --help
+>
+> `Documentation`
+
+> docker cp ./Login.java c174548a2619:/app/Login.java
+>
+> `Copy file into container`
