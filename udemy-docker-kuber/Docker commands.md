@@ -1,5 +1,3 @@
----
-
 ## **Images**
 
 #### Tag
@@ -24,8 +22,7 @@
 
 #### Analyze
 
-> docker image inspect
-
+> docker image inspect ID_NAME_IMAGE
 
 ## **Component**
 
@@ -43,17 +40,21 @@
 
 #### Analyze
 
-> docker container inspect
+> docker container inspect ID_NAME_CONTAINER
 
 #### Run, stop, restart
 
-> docker run / stop / start, docker run *-p* EXTERNAL_PORT:INTERNAL_PORT_NUMBER NAME_OR_ID_IMAGE
+> docker run / stop / start, docker run *-p* EXTERNAL_PORT:INTERNAL_PORT_NUMBER --rm -d --name NAME_OR_ID_IMAGE
 >
 > `-p port: assign ports`
+>
+> `--rm remove: delete container when stop`
+>
+> `-d diattach`
+>
+> `--name assign a name to container`
 
 ---
-
-
 
 ## **TIPS**
 
@@ -82,3 +83,9 @@
 > docker cp ./Login.java c174548a2619:/app/Login.java
 >
 > `Copy file into container`
+
+> docker cp CONTAINER_ID:/app/logs ./logs
+>
+> `Copy logs`
+
+## Comunication and Network
