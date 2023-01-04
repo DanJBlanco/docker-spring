@@ -90,4 +90,18 @@
 >
 > `Copy logs`
 
-## Comunication and Network
+## E.G:
+
+#### Start Mysql
+
+> docker run -d -p 3307:3306 --name mysql8 --network spring -e MYSQL_ROOT_PASSWORD=sa123123 -e MYSQL_DATABASE=msvc_users -v data-mysql:/var/lib/mysql --restart=always mysql:8
+
+#### Start Postgres
+
+> docker run -d -p 5433:5432 --name postgres15 --network spring -e POSTGRES_PASSWORD=sa123123 -e POSTGRES_DB=msvc_courses -v data-postgres:/var/lib/postgresql/data --restart=always postgres:15-alpine
+
+#### Start MSVC project
+
+> docker run -d -p 8001:8001 --rm --name msvc-users --network spring users
+>
+> docker run -d -p 8002:8002 --rm --name msvc-courses --network spring courses
