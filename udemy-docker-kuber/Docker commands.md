@@ -44,7 +44,7 @@
 
 #### Run, stop, restart
 
-> docker run / stop / start, docker run *-p* EXTERNAL_PORT:INTERNAL_PORT_NUMBER --rm -d --name NAME_OR_ID_IMAGE
+> docker run / stop / start, docker run *-p* EXTERNAL_PORT:INTERNAL_PORT_NUMBER --rm -d --name NAME_OR_ID_CONTAINER --network NAME_NETWORK ID_NAME_IMAGE
 >
 > `-p port: assign ports`
 >
@@ -53,6 +53,8 @@
 > `-d diattach`
 >
 > `--name assign a name to container`
+>
+> `--network assign network to container`
 
 ---
 
