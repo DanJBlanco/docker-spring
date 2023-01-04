@@ -90,6 +90,10 @@
 >
 > `Copy logs`
 
+> docker volume ls
+>
+> `ls list: list all volumens`
+
 ## E.G:
 
 #### Start Mysql
@@ -105,3 +109,7 @@
 > docker run -d -p 8001:8001 --rm --name msvc-users --network spring users
 >
 > docker run -d -p 8002:8002 --rm --name msvc-courses --network spring courses
+
+#### Container utilitary
+
+> docker run -it --rm --network spring mysql:8 bash
