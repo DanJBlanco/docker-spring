@@ -60,7 +60,9 @@
 
 ## Docker Compose
 
-> docker-compose up -d
+> docker-compose up -d --build
+>
+> `--build force to build images`
 
 > docker-compose down
 

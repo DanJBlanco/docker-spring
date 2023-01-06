@@ -32,7 +32,10 @@ services:
 
   msvc-users:
     container_name: msvc-users
-    image: users
+    build:
+      context: ./
+      dockerfile: ./msvc-users/Dockerfile
+
     ports:
       - "8001:8001"
     env_file: ./msvc-users/.env
@@ -44,7 +47,9 @@ services:
 
   msvc-courses:
     container_name: msvc-courses
-    image: courses
+    build:
+      context: ./
+      dockerfile: ./msvc-courses/Dockerfile
     ports:
       - "8002:8002"
     env_file:
@@ -53,6 +58,7 @@ services:
       - spring
     depends_on:
       - postgres15
+      - msvc-users
     restart: always
 
 
