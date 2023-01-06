@@ -58,6 +58,13 @@
 
 ---
 
+## Docker Compose
+
+> docker-compose up -d
+
+> docker-compose down
+
+
 ## **TIPS**
 
 > DOCKER_BUILDKIT=0 : print log to view errors
