@@ -96,9 +96,19 @@
 
 ## E.G:
 
-#### Start Mysql
+#### Create images
+
+> docker build -t users . -f ./msvc-users/Dockerfile
+
+#### 
+
+Start Mysql
 
 > docker run -d -p 3307:3306 --name mysql8 --network spring -e MYSQL_ROOT_PASSWORD=sa123123 -e MYSQL_DATABASE=msvc_users -v data-mysql:/var/lib/mysql --restart=always mysql:8
+>
+> `-e enviroment: enviorement variable`
+>
+> `-v volumen: file to persist data`
 
 #### Start Postgres
 
@@ -113,3 +123,11 @@
 #### Container utilitary
 
 > docker run -it --rm --network spring mysql:8 bash
+
+#### Enviorment Variable
+
+> docker run -p 8001:8090 --env PORT=8090 -d --rm --name msvc-users --network spring users
+>
+> docker run -p 8001:8091 --env-file ./msvc-users/.env -d --rm --name msvc-users --network spring users
+>
+> `--env-file file where be all variable`

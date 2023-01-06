@@ -22,8 +22,8 @@ FROM openjdk:17.0.2-slim
 WORKDIR /app
 RUN mkdir "./logs"
 COPY --from=builder /app/msvc-users/target/msvc-users-0.0.1-SNAPSHOT.jar .
-
-EXPOSE 8001
+ENV PORT 8000
+EXPOSE $PORT
 
 CMD ["java", "-jar", "msvc-users-0.0.1-SNAPSHOT.jar"]
 
