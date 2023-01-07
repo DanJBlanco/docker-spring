@@ -68,7 +68,6 @@
 
 > docker-compose down
 
-
 ## Docker HUB
 
 ###### *What is?*
@@ -95,6 +94,19 @@ Cloud repository, where we can share, store, and implements Docker's images
 > docker pull image:tag
 >
 > * Download images
+
+## Amazon AWS ( cloud )
+
+> Remote deployments devices
+>
+> * Self-managed or manual managed
+>   * VPS (Virtual Private Server), Amazon EC2 (Elastic Compute Cloud)
+> * Management by the service
+>   * Amazon ECS ( Elastic Container Service )
+
+> 1. Install Docker into remote device using SSH
+> 2. Docker pull from Docker hub
+> 3. Run container into remote host
 
 ## **TIPS**
 
