@@ -60,12 +60,41 @@
 
 ## Docker Compose
 
-> docker-compose up -d --build
+> docker-compose up -d, --build, build
 >
-> `--build force to build images`
+> `--build force to build and up images`
+>
+> `build force to build images`
 
 > docker-compose down
 
+
+## Docker HUB
+
+###### *What is?*
+
+Cloud repository, where we can share, store, and implements Docker's images
+
+###### *Docker Benefits*
+
+* We havent uninstall and reinstall local dependencies every time
+* We have same eviroment ( local and production ), same version, tools and runtimes
+* We are allowed to share projects with friends a teams with the same environment and configurations
+
+###### *Share Imagens*
+
+* Dockerfile attached with our source code
+  * We need to build imagen with *docker build*
+* Docker Hub's Image
+  * Download images, and run the container based on it
+
+> docker push:tag
+>
+> * To Share/upload to the repository, logging in is required
+
+> docker pull image:tag
+>
+> * Download images
 
 ## **TIPS**
 
@@ -102,6 +131,18 @@
 > docker volume ls
 >
 > `ls list: list all volumens`
+
+> docker tag udemy-docker-kuber-msvc-users djblancoh/users
+>
+> tag clone image and assign new name
+
+> docker login
+>
+> username: djblancoh
+>
+> password: ********
+
+> docker logout
 
 ## E.G:
 
