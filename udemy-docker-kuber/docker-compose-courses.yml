@@ -1,0 +1,49 @@
+version: "3.9"
+
+services:
+  postgres15:
+    container_name: postgres15
+    image: postgres:15-alpine
+    ports:
+      -  "5532:5432"
+    environment:
+      POSTGRES_PASSWORD: sa123123
+      POSTGRES_DB: msvc_courses
+    volumes:
+      - data-postgres:/var/lib/postgresql/data
+    restart: always
+    networks:
+      - spring
+
+  msvc-courses:
+    container_name: msvc-courses
+    image: djblancoh/courses
+#    build:
+#      context: ./
+#      dockerfile: ./msvc-courses/Dockerfile
+    ports:
+      - "8002:8002"
+#    env_file:
+#      - ./msvc-courses/.env
+    environment:
+      PORT: 8002
+      DB_HOST: postgres15
+      DB_PORT: 5432
+      DB_DATABASE: msvc_courses
+      DB_USERNAME: postgres
+      DB_PASSWORD: sa123123
+      USERS_URL: ec2-54-89-214-21.compute-1.amazonaws.com:8001
+
+    networks:
+      - spring
+    depends_on:
+      - postgres15
+    restart: always
+
+
+volumes:
+  data-postgres:
+    name: data-postgres
+
+networks:
+  spring:
