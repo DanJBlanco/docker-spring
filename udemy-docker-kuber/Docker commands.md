@@ -105,8 +105,26 @@ Cloud repository, where we can share, store, and implements Docker's images
 >   * Amazon ECS ( Elastic Container Service )
 
 > 1. Install Docker into remote device using SSH
+>
+>    * ` sudo amazon-linux-extras install docker`
 > 2. Docker pull from Docker hub
+>
+>    * `sudo curl -SL https://github.com/docker/compose/releases/download/v2.14.2/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose`
+>    * sudo chmod +x /usr/local/bin/docker-compose
+>    * `sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose`
+>      * `Set docker compose global`
+>    * `scp -i "spring-cloud.pem" docker-compose.yml ec2-user@ec2-3-83-206-212.compute-1.amazonaws.com:/home/ec2-user`
+>      * Copy Docker-compose from my pc to aws
+>    * `free`
+>      * `Show available resources`
 > 3. Run container into remote host
+>
+>    * `sudo docker-compose up -d`
+>
+>      * ERROR:
+>        * ```Failed to start docker.service: The name org.freedesktop.PolicyKit1 was not provided by any .service files```
+>      * Fixed:
+>        * `sudo systemctl start docker`
 
 ## **TIPS**
 
@@ -201,3 +219,10 @@ Start Mysql
 > `--build-arg edit argumentes value`
 >
 > docker run -p 8001:8091 -d --rm --name msvc-users --network spring users
+
+#### Cloud providers
+
+> * Amazon AWS
+> * Microsoft Azure
+> * Google cloud plataform
+> * Digital Ocean
