@@ -1,19 +1,17 @@
-ARG MSVC_NAME=msvc-courses
 FROM openjdk:17.0.2-slim as builder
 
-ARG MSVC_NAME
 WORKDIR /app/msvc-courses
 
 COPY ./pom.xml /app
-COPY ./$MSVC_NAME/.mvn ./.mvn
-COPY ./$MSVC_NAME/mvnw .
-COPY ./$MSVC_NAME/pom.xml .
+COPY ./msvc-courses/.mvn ./.mvn
+COPY ./msvc-courses/mvnw .
+COPY ./msvc-courses/pom.xml .
 
 
 # RUN ./mvnw clean package -Dmaven.test.skip -Dmaven.main.skip -Dspring-boot.repackage.skip && rm -r ./target/
 RUN ./mvnw dependency:go-offline
 
-COPY ./$MSVC_NAME/src ./src
+COPY ./msvc-courses/src ./src
 
 RUN ./mvnw clean package -DskipTests
 
@@ -21,19 +19,15 @@ RUN ./mvnw clean package -DskipTests
 
 FROM openjdk:17.0.2-slim
 
-ARG MSVC_NAME
 WORKDIR /app
 RUN mkdir "./logs"
 
-ARG TARGET_FOLDER=/app/$MSVC_NAME/target
+COPY --from=builder /app/msvc-courses/target/msvc-courses-0.0.1-SNAPSHOT.jar .
 
-COPY --from=builder $TARGET_FOLDER/msvc-courses-0.0.1-SNAPSHOT.jar .
+EXPOSE 8002
 
-ARG PORT_APP=8002
+CMD sleep 10 && java -jar msvc-courses-0.0.1-SNAPSHOT.jar
 
-ENV PORT $PORT_APP
-EXPOSE $PORT
-
-CMD ["java", "-jar", "msvc-courses-0.0.1-SNAPSHOT.jar"]
+#CMD ["java", "-jar", "msvc-courses-0.0.1-SNAPSHOT.jar"]
 
 
