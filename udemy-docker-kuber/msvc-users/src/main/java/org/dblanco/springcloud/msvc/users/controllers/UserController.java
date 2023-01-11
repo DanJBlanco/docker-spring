@@ -3,7 +3,10 @@ package org.dblanco.springcloud.msvc.users.controllers;
 import jakarta.validation.Valid;
 import org.dblanco.springcloud.msvc.users.models.entity.User;
 import org.dblanco.springcloud.msvc.users.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -16,13 +19,21 @@ public class UserController {
 
     private final UserService userService;
 
-    public UserController(@Qualifier("UserServiceMySql") UserService userService) {
+    private final ApplicationContext context;
+
+    public UserController(@Qualifier("UserServiceMySql") UserService userService, ApplicationContext applicationContext) {
         this.userService = userService;
+        this.context = applicationContext;
+    }
+
+    @GetMapping("/crash")
+    public void crash(){
+        ((ConfigurableApplicationContext) context).close();
     }
 
     @GetMapping("/")
     public Map<String, List<User>> list(){
-        return Collections.singletonMap("user docker stages:", userService.list());
+        return Collections.singletonMap("user Kubernetes stages:", userService.list());
     }
 
     @GetMapping("/{id}")
