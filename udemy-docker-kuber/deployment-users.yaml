@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: msvc-users
+  name: msvc-users
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: msvc-users
+  template:
+    metadata:
+      labels:
+        app: msvc-users
+    spec:
+      containers:
+      - image: djblancoh/users:v2
+        name: users
+        ports:
+        - containerPort: 8001
