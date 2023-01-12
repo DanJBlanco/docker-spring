@@ -49,6 +49,18 @@
 >
 > `Scale the numbers of pods instance`
 
+> `kubectl delete -f ./deployment-users.yaml`
+>
+> delete deployment in declarative
+>
+> * -f file with associate name to deployment
+
+> `kubectl apply -f ./deployment-users.yaml`
+>
+> Run a deployment, if it not exist  then create deployment
+>
+> * -f file
+
 ### Services
 
 > kubectl expose deployment mysql8 --port=3306 --type=ClusterIP
@@ -84,3 +96,9 @@
 > kubectl describe service mysql8
 
 > kubectl get all
+
+> kubectl exec -it msvc-users-598dd6469d-dc2t2 bash
+
+> `kubectl delete -f ./deployment-mysql.yaml`
+>
+> delete pods
