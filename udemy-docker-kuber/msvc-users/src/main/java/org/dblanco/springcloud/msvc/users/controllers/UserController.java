@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -21,9 +22,12 @@ public class UserController {
 
     private final ApplicationContext context;
 
-    public UserController(@Qualifier("UserServiceMySql") UserService userService, ApplicationContext applicationContext) {
+    private final Environment env;
+
+    public UserController(@Qualifier("UserServiceMySql") UserService userService, ApplicationContext applicationContext, Environment env) {
         this.userService = userService;
         this.context = applicationContext;
+        this.env = env;
     }
 
     @GetMapping("/crash")
@@ -32,8 +36,11 @@ public class UserController {
     }
 
     @GetMapping("/")
-    public Map<String, List<User>> list(){
-        return Collections.singletonMap("user Kubernetes stages:", userService.list());
+    public ResponseEntity<?> list(){
+        Map<String, Object> body = new HashMap<>();
+        body.put("user Kubernetes stages:", userService.list());
+        body.put("podInfo", env.getProperty("MY_POD_NAME") + ": " + env.getProperty("MY_POD_IP"));
+        return ResponseEntity.ok(body);
     }
 
     @GetMapping("/{id}")

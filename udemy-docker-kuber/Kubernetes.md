@@ -10,6 +10,8 @@
 >
 > `generate url to service `
 
+
+
 ## Kubectl
 
 ### Deployments
@@ -74,6 +76,12 @@
 > `kubectl get service mysql8 -o yaml > svc-mysql.yaml`
 >
 > create service file
+
+### Cluster
+
+> `kubectl create clusterrolebinding admin --clusterrole=cluster-admin --serviceaccount=default:default`
+>
+> create cluster to connect spring cloud kubernetes with kubernetes
 
 ## E.G.:
 

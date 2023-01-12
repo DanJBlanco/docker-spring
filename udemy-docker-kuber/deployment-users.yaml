@@ -15,11 +15,19 @@ spec:
         app: msvc-users
     spec:
       containers:
-      - image: djblancoh/users:v2
+      - image: djblancoh/users:latest
         name: users
         ports:
         - containerPort: 8001
         env:
+          - name: MY_POD_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: MY_POD_IP
+            valueFrom:
+              fieldRef:
+                fieldPath: status.podIP
           - name: PORT
             valueFrom:
               configMapKeyRef:
@@ -55,3 +63,4 @@ spec:
               configMapKeyRef:
                 name: msvc-users
                 key: courses_url
+
