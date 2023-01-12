@@ -40,6 +40,7 @@ public class UserController {
         Map<String, Object> body = new HashMap<>();
         body.put("user Kubernetes stages:", userService.list());
         body.put("podInfo", env.getProperty("MY_POD_NAME") + ": " + env.getProperty("MY_POD_IP"));
+        body.put("Text: ", env.getProperty("config.text"));
         return ResponseEntity.ok(body);
     }
 

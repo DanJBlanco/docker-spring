@@ -7,9 +7,26 @@ data:
   db_host: mysql8
   db_port: "3306"
   db_database: msvc_users
-  db_username: root
-  db_password: sa123123
+#  db_username: root
+#  db_password: sa123123
   courses_url: "msvc-courses:8002"
+  application.yaml: |-
+    config:
+      text: Config default env
+    ---
+    spring:
+      config:
+        activate:
+          on-profile: dev
+    config:
+      text: Config dev environment
+    ---
+    spring:
+      config:
+        activate:
+          on-profile: prod
+    config:
+      text: Config prod environment
 
 ---
 apiVersion: v1
@@ -21,6 +38,6 @@ data:
   db_host: postgres15
   db_port: "5432"
   db_database: msvc_courses
-  db_username: postgres
-  db_password: sa123123
+#  db_username: postgres
+#  db_password: sa123123
   users_url: "msvc-users:8001"
