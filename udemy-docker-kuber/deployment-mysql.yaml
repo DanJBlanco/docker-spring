@@ -22,3 +22,11 @@ spec:
             value: sa123123
           - name: MYSQL_DATABASE
             value: msvc_users
+        volumeMounts:
+          - name: data-mysql
+            mountPath: /var/lib/mysql
+      volumes:
+        - name: data-mysql
+          hostPath:
+            path: /var/lib/mysql
+            type: DirectoryOrCreate
