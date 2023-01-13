@@ -132,4 +132,10 @@ public class UserController {
         return ResponseEntity.ok(userService.findAllById(ids));
     }
 
+    @GetMapping("/authorized")
+    public Map<String, Object> auth(@RequestParam(name = "code") String code){
+        return Collections.singletonMap("code", code);
+
+    }
+
 }
