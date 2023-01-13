@@ -1,4 +1,4 @@
-package org.djblanco.springcloud.msvc;
+package org.djblanco.springcloud.msvc.auth;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
