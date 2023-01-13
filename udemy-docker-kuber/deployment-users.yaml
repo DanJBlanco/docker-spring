@@ -48,6 +48,16 @@ spec:
               configMapKeyRef:
                 name: msvc-users
                 key: db_database
+          - name: LB_ISSUER_URI
+            valueFrom:
+              configMapKeyRef:
+                name: msvc-users
+                key: lb_auth_issuer_uri
+          - name: LB_USERS_URI
+            valueFrom:
+              configMapKeyRef:
+                key: lb_users_uri
+                name: msvc-users
           - name: DB_USERNAME
             valueFrom:
               secretKeyRef:
