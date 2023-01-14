@@ -17,19 +17,21 @@ import java.util.Collections;
 @Service
 public class UserServices implements UserDetailsService {
 
-    private final WebClient client;
+    private final WebClient.Builder client;
 
     private Logger log = LoggerFactory.getLogger(UserServices.class);
 
-    public UserServices(WebClient client) {
+    public UserServices(WebClient.Builder client) {
         this.client = client;
     }
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         try {
-            User user = client.get()
-                    .uri("http://msvc-users:8001/login", uriBuilder -> uriBuilder.queryParam("email", email).build())
+            User user = client
+                    .build()
+                    .get()
+                    .uri("http://msvc-users/login", uriBuilder -> uriBuilder.queryParam("email", email).build())
                     .accept(MediaType.APPLICATION_JSON)
                     .retrieve()
                     .bodyToMono(User.class)
@@ -47,8 +49,8 @@ public class UserServices implements UserDetailsService {
             log.error("ERROR: {}", error);
             log.error(e.getMessage());
             throw new UsernameNotFoundException(error);
+
         }
 
-        return null;
     }
 }
