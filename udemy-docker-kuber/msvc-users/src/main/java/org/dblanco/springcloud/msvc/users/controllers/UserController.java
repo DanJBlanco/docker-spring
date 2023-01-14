@@ -10,6 +10,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,10 +25,13 @@ public class UserController {
 
     private final Environment env;
 
-    public UserController(@Qualifier("UserServiceMySql") UserService userService, ApplicationContext applicationContext, Environment env) {
+    private final BCryptPasswordEncoder passwordEncoder;
+
+    public UserController(@Qualifier("UserServiceMySql") UserService userService, ApplicationContext applicationContext, Environment env, BCryptPasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.context = applicationContext;
         this.env = env;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @GetMapping("/crash")
@@ -72,6 +76,7 @@ public class UserController {
                             .singletonMap("message", "Email already exist!!!")
                     );
         }
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(user));
     }
 
@@ -100,7 +105,7 @@ public class UserController {
 
             userDb.setName(user.getName());
             userDb.setEmail(user.getEmail());
-            userDb.setPassword(user.getPassword());
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
 
             return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(userDb));
         }
@@ -135,6 +140,18 @@ public class UserController {
     @GetMapping("/authorized")
     public Map<String, Object> auth(@RequestParam(name = "code") String code){
         return Collections.singletonMap("code", code);
+
+    }
+
+    @GetMapping("/login")
+    public ResponseEntity<?> loginByEmail(@RequestParam String email){
+
+        Optional<User> oEmail = userService.getByEmail(email);
+        if (oEmail.isPresent()){
+            return ResponseEntity.ok(oEmail.get());
+        }
+
+        return ResponseEntity.notFound().build();
 
     }
 
