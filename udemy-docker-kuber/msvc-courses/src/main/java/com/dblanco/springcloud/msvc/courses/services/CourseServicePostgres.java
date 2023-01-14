@@ -113,14 +113,14 @@ public class CourseServicePostgres implements CourseService {
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<Course> getByIdWithUsers(Long id) {
+    public Optional<Course> getByIdWithUsers(Long id, String token) {
 
         Optional<Course> o = courseRepository.findById(id);
         if (o.isPresent()){
             Course course = o.get();
             if(!course.getCourseUsers().isEmpty()){
                 List<Long> ids = course.getCourseUsers().stream().map(CourseUser::getUserId).toList();
-                List<User> usersByCourses = clientRest.getUsersByCourses(ids);
+                List<User> usersByCourses = clientRest.getUsersByCourses(ids, token);
                 course.setUsers(usersByCourses);
             }
             return Optional.of(course);

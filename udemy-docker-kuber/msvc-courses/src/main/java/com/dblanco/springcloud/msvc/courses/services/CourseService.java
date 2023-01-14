@@ -20,6 +20,6 @@ public interface CourseService {
     Optional<User> unAssignUser(User user, Long courseId);
 
 
-    Optional<Course> getByIdWithUsers(Long id);
+    Optional<Course> getByIdWithUsers(Long id, String token);
 
 }
