@@ -48,10 +48,10 @@ public class CourseServicePostgres implements CourseService {
 
     @Override
     @Transactional
-    public Optional<User> assignUser(User user, Long courseId) {
+    public Optional<User> assignUser(User user, Long courseId, String token) {
         Optional<Course> o = courseRepository.findById(courseId);
         if(o.isPresent()){
-            User userMsvc = clientRest.detail(user.getId());
+            User userMsvc = clientRest.detail(user.getId(), token);
 
             Course course = o.get();
 
@@ -69,10 +69,10 @@ public class CourseServicePostgres implements CourseService {
 
     @Override
     @Transactional
-    public Optional<User> createUser(User user, Long courseId) {
+    public Optional<User> createUser(User user, Long courseId, String token) {
         Optional<Course> o = courseRepository.findById(courseId);
         if(o.isPresent()){
-            User newUserMsvc = clientRest.create(user);
+            User newUserMsvc = clientRest.create(user, token);
 
             Course course = o.get();
 
@@ -90,12 +90,12 @@ public class CourseServicePostgres implements CourseService {
 
     @Override
     @Transactional
-    public Optional<User> unAssignUser(User user, Long courseId) {
+    public Optional<User> unAssignUser(User user, Long courseId, String token) {
 
         Optional<Course> o = courseRepository.findById(courseId);
 
         if(o.isPresent()){
-            User newUserMsvc = clientRest.detail(user.getId());
+            User newUserMsvc = clientRest.detail(user.getId(), token);
 
             Course course = o.get();
 

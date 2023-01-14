@@ -10,10 +10,10 @@ import java.util.List;
 public interface UserClientRest {
 
     @GetMapping("/{id}")
-    User detail(@PathVariable Long id);
+    User detail(@PathVariable Long id,  @RequestHeader(value = "Authorization", required = true) String token);
 
     @PostMapping("/")
-    User create(@RequestBody User user);
+    User create(@RequestBody User user,  @RequestHeader(value = "Authorization", required = true) String token);
 
     @GetMapping("/users-by-courses")
     List<User> getUsersByCourses(@RequestParam Iterable<Long> ids,

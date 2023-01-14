@@ -15,9 +15,9 @@ public interface CourseService {
 
     void deleteCourseUserById(Long id);
 
-    Optional<User> assignUser(User user, Long courseId);
-    Optional<User> createUser(User user, Long courseId);
-    Optional<User> unAssignUser(User user, Long courseId);
+    Optional<User> assignUser(User user, Long courseId, String token);
+    Optional<User> createUser(User user, Long courseId, String token);
+    Optional<User> unAssignUser(User user, Long courseId, String token);
 
 
     Optional<Course> getByIdWithUsers(Long id, String token);

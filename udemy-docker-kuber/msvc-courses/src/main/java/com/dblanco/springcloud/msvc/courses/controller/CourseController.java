@@ -79,11 +79,11 @@ public class CourseController {
     }
 
     @PutMapping("/assign-user/{courseId}")
-    public ResponseEntity<?> assignUser(@RequestBody User user, @PathVariable Long courseId){
+    public ResponseEntity<?> assignUser(@RequestBody User user, @PathVariable Long courseId,  @RequestHeader(value = "Authorization", required = true) String token) {
 
         Optional<User> o;
         try{
-           o = courseService.assignUser(user, courseId);
+           o = courseService.assignUser(user, courseId, token);
         }catch (FeignException e){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(Collections.singletonMap("message","Id User no exists, or Communication Error: " + e.getMessage()));
@@ -96,11 +96,11 @@ public class CourseController {
         return ResponseEntity.notFound().build();
     }
     @PostMapping("/create-user/{courseId}")
-    public ResponseEntity<?> createUser(@RequestBody User user, @PathVariable Long courseId){
+    public ResponseEntity<?> createUser(@RequestBody User user, @PathVariable Long courseId,  @RequestHeader(value = "Authorization", required = true) String token){
 
         Optional<User> o;
         try{
-           o = courseService.createUser(user, courseId);
+           o = courseService.createUser(user, courseId, token);
         }catch (FeignException e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(Collections.singletonMap("message","Could not create user or Communication Error: " + e.getMessage()));
@@ -113,11 +113,11 @@ public class CourseController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Collections.singletonMap("Error:","User cant create"));
     }
     @DeleteMapping("/delete-user/{courseId}")
-    public ResponseEntity<?> deleteUser(@RequestBody User user, @PathVariable Long courseId){
+    public ResponseEntity<?> deleteUser(@RequestBody User user, @PathVariable Long courseId,  @RequestHeader(value = "Authorization", required = true) String token){
 
         Optional<User> o;
         try{
-           o = courseService.unAssignUser(user, courseId);
+           o = courseService.unAssignUser(user, courseId, token);
         }catch (FeignException e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(Collections.singletonMap("message","Could not create user or Communication Error: " + e.getMessage()));
